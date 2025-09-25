@@ -186,7 +186,7 @@ class MyAI(Alg3D):
     ) -> Tuple[int, int]: # 置く場所(x, y)
         # ここにアルゴリズムを書く
         board_instance = Board(board)
-        _, move = self.negamax(board_instance, depth=3, alpha=-math.inf, beta=math.inf, player=player)
+        _, move = self.negamax(board_instance, depth=5, alpha=-math.inf, beta=math.inf, player=player)
         return move
 
     # 評価関数（簡易: 3連を狙う）
