@@ -187,7 +187,7 @@ class MyAI(Alg3D):
         # ここにアルゴリズムを書く
         board_instance = Board(board)
         _, move = self.alphabeta(board_instance, depth=3, alpha=-math.inf, beta=math.inf, maximizing=True, player=player)
-        return (1, 1)
+        return move
 
     # 評価関数（簡易: 3連を狙う）
     def evaluate(self, board: Board, player: int) -> int:
