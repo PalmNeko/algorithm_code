@@ -186,7 +186,7 @@ class MyAI(Alg3D):
     ) -> Tuple[int, int]: # 置く場所(x, y)
         # ここにアルゴリズムを書く
         board_instance = Board(board)
-        _, move = self.alphabeta(board_instance, depth=3, alpha=-math.inf, beta=math.inf, maximizing=True, player=player)
+        _, move = self.negamax(board_instance, depth=3, alpha=-math.inf, beta=math.inf, player=player)
         return move
 
     # 評価関数（簡易: 3連を狙う）
@@ -199,41 +199,33 @@ class MyAI(Alg3D):
         return 0  # ここを拡張して3連/2連加点可能
 
     # αβ探索
-    def alphabeta(self, board: Board, depth: int, alpha: int, beta: int, maximizing: bool, player: int):
+    def negamax(self, board: Board, depth: int, alpha: int, beta: int, player: int, color: int = 1):
         moves = board.valid_moves()
         if depth == 0 or not moves:
-            return self.evaluate(board, player), None
+            return color * self.evaluate(board, player), None  # 手がない場合は引き分け
 
         best_move = moves[0]
-        if maximizing:
-            max_eval = -math.inf
-            for x, y in moves:
-                # 置く
-                board.put_player_bit(x, y, player)
-                eval_score, _ = self.alphabeta(board, depth-1, alpha, beta, False, player)
+        max_eval = -math.inf
+
+        for x, y in moves:
+            z = board.put_player_bit(x, y, player)
+
+            # 勝利判定を手ごとに実施
+            if (player == 1 and board.is_win_black()) or (player == 2 and board.is_win_white()):
+                eval_score = 1000 + depth
                 board.rollback_player_bit(x, y)
-                if eval_score > max_eval:
-                    max_eval = eval_score
-                    best_move = (x, y)
-                    if max_eval == 1000:  # 勝ちが見えたら即決
-                        return max_eval, best_move
-                alpha = max(alpha, eval_score)
-                if beta <= alpha:
-                    break
-            return max_eval, best_move
-        else:
-            min_eval = math.inf
-            opp = 3 - player
-            for x, y in moves:
-                board.put_player_bit(x, y, opp)
-                eval_score, _ = self.alphabeta(board, depth-1, alpha, beta, True, player)
-                board.rollback_player_bit(x, y)
-                if eval_score < min_eval:
-                    min_eval = eval_score
-                    best_move = (x, y)
-                    if min_eval == -1000:  # 勝ちが見えたら即決
-                        return min_eval, best_move
-                beta = min(beta, eval_score)
-                if beta <= alpha:
-                    break
-            return min_eval, best_move
+                return eval_score, (x, y)  # 勝ち手なら即返す
+
+            eval_score, _ = self.negamax(board, depth - 1, -beta, -alpha, 3 - player, -color)
+            eval_score = -eval_score
+            board.rollback_player_bit(x, y)
+
+            if eval_score > max_eval:
+                max_eval = eval_score
+                best_move = (x, y)
+
+            alpha = max(alpha, eval_score)
+            if alpha >= beta:
+                break  # βカット
+
+        return max_eval, best_move
