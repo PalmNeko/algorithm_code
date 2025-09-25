@@ -1,9 +1,9 @@
 from typing import List, Tuple
 # from local_driver import Alg3D, Board # ローカル検証用
-# from local_driver import Alg3D # ローカル検証用
+from local_driver import Alg3D # ローカル検証用
 import math
 import copy
-from framework import Alg3D # 本番用
+# from framework import Alg3D # 本番用
 
 
 class Board:
@@ -186,7 +186,7 @@ class MyAI(Alg3D):
     ) -> Tuple[int, int]: # 置く場所(x, y)
         # ここにアルゴリズムを書く
         board_instance = Board(board)
-        _, move = self.alphabeta(board_instance, depth=3, alpha=-math.inf, beta=math.inf, maximizing=True, player=player)
+        _, move = self.alphabeta(board_instance, depth=1, alpha=-math.inf, beta=math.inf, maximizing=True, player=player)
         return move
 
     # 評価関数（簡易: 3連を狙う）
