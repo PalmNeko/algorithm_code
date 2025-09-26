@@ -287,4 +287,5 @@ class MyAI(Alg3D):
         return max_eval, best_move
     
     def is_time_up(self) -> bool:
+        return False
         return time.time() - self.start_time > self.time_limit
