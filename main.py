@@ -192,7 +192,7 @@ class MyAI(Alg3D):
         # ここにアルゴリズムを書く
         best_score = -math.inf
         best_move = None
-        for depth in range(1, 7):
+        for depth in range(1, 5):
             board_instance = Board(board)
             eval_score, move = self.negamax(board_instance, depth=depth, alpha=-math.inf, beta=math.inf, player=player)
             if best_move is None:
@@ -213,38 +213,38 @@ class MyAI(Alg3D):
             return 10000 if player == 2 else -10000
         
         score = 0
-        my_board = board.black_board if player == 1 else board.white_board
-        opponent_board = board.white_board if player == 1 else board.black_board
+        # my_board = board.black_board if player == 1 else board.white_board
+        # opponent_board = board.white_board if player == 1 else board.black_board
         
-        # 各ラインを詳細に評価
-        for mask in board.mask_lines:
-            my_bits = my_board & mask
-            opponent_bits = opponent_board & mask
+        # # 各ラインを詳細に評価
+        # for mask in board.mask_lines:
+        #     my_bits = my_board & mask
+        #     opponent_bits = opponent_board & mask
             
-            my_count = bin(my_bits).count('1')
-            opponent_count = bin(opponent_bits).count('1')
+        #     my_count = bin(my_bits).count('1')
+        #     opponent_count = bin(opponent_bits).count('1')
             
-            # 相手と自分が同じラインにいる場合は無効
-            if my_bits > 0 and opponent_bits > 0:
-                continue
+        #     # 相手と自分が同じラインにいる場合は無効
+        #     if my_bits > 0 and opponent_bits > 0:
+        #         continue
                 
-            # 自分のライン評価
-            if my_bits > 0 and opponent_bits == 0:
-                if my_count == 3:
-                    score += 1000  # 3連リーチ（次で勝利）
-                elif my_count == 2:
-                    score += 100   # 2連
-                elif my_count == 1:
-                    score += 10    # 1個
+        #     # 自分のライン評価
+        #     if my_bits > 0 and opponent_bits == 0:
+        #         if my_count == 3:
+        #             score += 1000  # 3連リーチ（次で勝利）
+        #         elif my_count == 2:
+        #             score += 100   # 2連
+        #         elif my_count == 1:
+        #             score += 10    # 1個
             
-            # 相手のライン評価（防御重視で重い重み）
-            if opponent_bits > 0 and my_bits == 0:
-                if opponent_count == 3:
-                    score -= 2000  # 相手の3連リーチは最も危険
-                elif opponent_count == 2:
-                    score -= 200   # 相手の2連も要注意
-                elif opponent_count == 1:
-                    score -= 15    # 相手の1個も少し気にする
+        #     # 相手のライン評価（防御重視で重い重み）
+        #     if opponent_bits > 0 and my_bits == 0:
+        #         if opponent_count == 3:
+        #             score -= 2000  # 相手の3連リーチは最も危険
+        #         elif opponent_count == 2:
+        #             score -= 200   # 相手の2連も要注意
+        #         elif opponent_count == 1:
+        #             score -= 15    # 相手の1個も少し気にする
         
         return score
 
