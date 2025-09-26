@@ -1,10 +1,10 @@
 from typing import List, Tuple
 # from local_driver import Alg3D, Board # ローカル検証用
-from local_driver import Alg3D # ローカル検証用
+# from local_driver import Alg3D # ローカル検証用
 import math
 import copy
 import time
-# from framework import Alg3D # 本番用
+from framework import Alg3D # 本番用
 
 
 class Board:
