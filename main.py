@@ -1,8 +1,9 @@
 from typing import List, Tuple
-# from local_driver import Alg3D, Board # ローカル検証用
+from local_driver import Alg3D, Board # ローカル検証用
 import math
 import copy
-from framework import Alg3D, Board # 本番用
+import time
+# from framework import Alg3D, Board # 本番用
 
 
 class Board3d:
@@ -189,9 +190,12 @@ class MyAI(Alg3D):
         last_move: Tuple[int, int, int] # 直前に置かれた場所(x, y, z)
     ) -> Tuple[int, int]: # 置く場所(x, y)
         # ここにアルゴリズムを書く
+        self.start_time = time.time()
         best_score = -math.inf
         best_move = None
-        for depth in range(1, 5):
+        for depth in range(1, 10):
+            if self.is_time_up():
+                break
             board_instance = Board3d(board)
             eval_score, move = self.negamax(board_instance, depth=depth, alpha=-math.inf, beta=math.inf, player=player)
             if best_move is None:
@@ -250,7 +254,7 @@ class MyAI(Alg3D):
     # αβ探索
     def negamax(self, board: Board, depth: int, alpha: int, beta: int, player: int, color: int = 1):
         moves = board.valid_moves()
-        if depth == 0 or not moves:
+        if depth == 0 or not moves or self.is_time_up():
             eval_score = self.evaluate(board, player)
             # print(f"Eval: {eval_score} at depth {depth}")
             # board.print_board()
@@ -282,3 +286,5 @@ class MyAI(Alg3D):
 
         return max_eval, best_move
     
+    def is_time_up(self) -> bool:
+        return time.time() - self.start_time > self.time_limit
