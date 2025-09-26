@@ -2,7 +2,7 @@ from typing import List, Tuple
 # from local_driver import Alg3D, Board # ローカル検証用
 import math
 import copy
-import time
+# import time
 from framework import Alg3D, Board # 本番用
 
 
