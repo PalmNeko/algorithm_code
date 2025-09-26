@@ -1,9 +1,9 @@
 from typing import List, Tuple
-# from local_driver import Alg3D, Board # ローカル検証用
+from local_driver import Alg3D, Board # ローカル検証用
 import math
 import copy
 import time
-from framework import Alg3D, Board # 本番用
+# from framework import Alg3D, Board # 本番用
 
 
 class Board3d:
@@ -190,7 +190,7 @@ class MyAI(Alg3D):
         last_move: Tuple[int, int, int] # 直前に置かれた場所(x, y, z)
     ) -> Tuple[int, int]: # 置く場所(x, y)
         # ここにアルゴリズムを書く
-        self.start_time = time.time()
+        # self.start_time = time.time()
         best_score = -math.inf
         best_move = None
         for depth in range(1, 10):
