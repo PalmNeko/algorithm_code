@@ -191,7 +191,7 @@ class MyAI(Alg3D):
         last_move: Tuple[int, int, int] # 直前に置かれた場所(x, y, z)
     ) -> Tuple[int, int]: # 置く場所(x, y)
         # ここにアルゴリズムを書く
-        self.start_time = time.time()
+        # self.start_time = time.time()
         best_score = -math.inf
         best_move = None
         return (1, 1)
