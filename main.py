@@ -194,6 +194,7 @@ class MyAI(Alg3D):
         self.start_time = time.time()
         best_score = -math.inf
         best_move = None
+        return (1, 1)
         for depth in range(1, 8):
             board_instance = Board(board)
             eval_score, move = self.negamax(board_instance, depth=depth, alpha=-math.inf, beta=math.inf, player=player)
