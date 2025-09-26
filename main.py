@@ -191,7 +191,7 @@ class MyAI(Alg3D):
         # ここにアルゴリズムを書く
         best_score = -math.inf
         best_move = None
-        for depth in range(1, 6):
+        for depth in range(1, 5):
             board_instance = Board3d(board)
             eval_score, move = self.negamax(board_instance, depth=depth, alpha=-math.inf, beta=math.inf, player=player)
             if best_move is None:
