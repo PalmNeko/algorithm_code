@@ -193,7 +193,7 @@ class MyAI(Alg3D):
         # self.start_time = time.time()
         best_score = -math.inf
         best_move = None
-        for depth in range(1, 10):
+        for depth in range(1, 6):
             if self.is_time_up():
                 break
             board_instance = Board3d(board)
