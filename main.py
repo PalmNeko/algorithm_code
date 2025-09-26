@@ -1,9 +1,8 @@
 from typing import List, Tuple
-# from local_driver import Alg3D, Board # ローカル検証用
-# from local_driver import Alg3D # ローカル検証用
+from local_driver import Alg3D, Board # ローカル検証用
 import math
 import copy
-from framework import Alg3D, Board # 本番用
+# from framework import Alg3D, Board # 本番用
 
 
 class Board3d:
@@ -267,7 +266,7 @@ class MyAI(Alg3D):
             if (player == 1 and board.is_win_black()) or (player == 2 and board.is_win_white()):
                 eval_score = 1000 + depth
                 board.rollback_player_bit(x, y)
-                return eval_score, None  # 勝ち手なら即返す
+                return eval_score, (x, y)  # 勝ち手なら即返す
 
             eval_score, _ = self.negamax(board, depth - 1, -beta, -alpha, 3 - player, -color)
             eval_score = -eval_score
